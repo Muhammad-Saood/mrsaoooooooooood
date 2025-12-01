@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Web3 Airdrop</title>
+  <link rel="icon" href="https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/favicon1.ico" type="image/x-icon"/>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',sans-serif; }
+    body, html { height:100%; overflow:hidden; color:white; }
+    
+    /* Video Background */
+    #bgVideo {
+      position: fixed;
+      right: 0; bottom: 0;
+      min-width: 100%; min-height: 100%;
+      width: auto; height: auto;
+      z-index: -1;
+      object-fit: cover;
+    }
+    .overlay {
+      position: fixed;
+      top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,30,0.75);
+      z-index: -1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 4.5rem;
+      background: linear-gradient(90deg, #ff00cc, #00ffcc, #ffff33, #ff33cc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(255,255,255,0.5);
+      margin-bottom: 10px;
+    }
+    .description {
+      font-size: 1.4rem;
+      text-align: center;
+      max-width: 900px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: all 0.4s ease;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .card:hover {
+      transform: translateY(-15px) scale(1.03);
+      box-shadow: 0 20px 40px rgba(0,255,255,0.4);
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      background: rgba(0,0,0,0.3);
+      padding: 15px;
+    }
+    .card-content {
+      padding: 20px;
+    }
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 10px;
+      color: #00ffff;
+    }
+    .card p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      opacity: 0.9;
+    }
+
+    .admin-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: linear-gradient(45deg, #ff00aa, #00ffff);
+      color: white;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: bold;
+      text-decoration: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 10;
+      transition: all 0.3s;
+    }
+    .admin-btn:hover { transform: scale(1.1); }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 3rem; }
+      .description { font-size: 1.1rem; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <video autoplay muted loop id="bgVideo">
+    <source src="https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/backvid.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+
+  <div class="container">
+    <header>
+      <h1>WEB3AIRDROP.LIVE</h1>
+      <p class="description">
+        Get your all web3 airdrops claim portals and claim your potential airdrops
+      </p>
+    </header>
+
+    <div class="cards-grid" id="cardsContainer">
+      <!-- Cards will be injected here by JavaScript -->
+    </div>
+
+    <a href="adminpanel.html" class="admin-btn" id="adminLink">⚙️ Admin Panel</a>
+  </div>
+
+  <script>
+    const defaultAirdrops = [
+      {
+        name: "LayerZero",
+        logo: "https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/layerzero.png",
+        desc: "Cross-chain communication protocol. Claim your potential ZRO airdrop.",
+        link: "https://claim.layerzero.network"
+      },
+      {
+        name: "Blast",
+        logo: "https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/blast.png",
+        desc: "L2 with native yield. High chance airdrop for early users.",
+        link: "https://blast.io"
+      },
+      {
+        name: "zkSync",
+        logo: "https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/zksync.png",
+        desc: "ZK Rollup L2. Confirmed airdrop for active users.",
+        link: "https://zksync.io"
+      },
+      {
+        name: "StarkNet",
+        logo: "https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/starknet.png",
+        desc: "Validity rollup on Ethereum. Early users eligible.",
+        link: "https://starknet.io"
+      },
+      {
+        name: "EigenLayer",
+        logo: "https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/eigenlayer.png",
+        desc: "Restaking protocol. Points system active.",
+        link: "https://eigenlayer.xyz"
+      },
+      {
+        name: "Scroll",
+        logo: "https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/scroll.png",
+        desc: "Bytecode-level compatible ZK L2.",
+        link: "https://scroll.io"
+      }
+    ];
+
+    // Load airdrops from localStorage or use default
+    let airdrops = JSON.parse(localStorage.getItem('web3airdrops')) || defaultAirdrops;
+
+    function renderCards() {
+      const container = document.getElementById('cardsContainer');
+      container.innerHTML = '';
+
+      airdrops.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.onclick = () => window.open(item.link, '_blank');
+
+        card.innerHTML = `
+          <img src="${item.logo}" alt="${item.name}" onerror="this.src='https://via.placeholder.com/300x180/111/fff?text=${item.name}'">
+          <div class="card-content">
+            <h3>${item.name}</h3>
+            <p>${item.desc}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // First render
+    renderCards();
+
+    // Admin panel protection (client-side only)
+    document.getElementById('adminLink').addEventListener('click', function(e) {
+      const password = prompt("🔐 Enter Admin Password:");
+      if (password !== "Saud20759@") {
+        e.preventDefault();
+        alert("❌ Incorrect password!");
+      }
+    });
+  </script>
+
+  <!-- Inline Admin Panel (simulated as separate page using JavaScript) -->
+  <script>
+    // This simulates /adminpanel.html in the same file
+    if (window.location.pathname.includes('adminpanel')) {
+      document.body.innerHTML = `
+        <style>
+          body { background:#000; color:#0f0; font-family:monospace; padding:40px; }
+          input, button, textarea { padding:10px; margin:5px; width:100%; max-width:500px; }
+          button { background:#0f0; color:#000; border:none; cursor:pointer; font-weight:bold; }
+          .list { margin-top:30px; }
+          .item { background:rgba(0,255,0,0.1); padding:15px; margin:10px 0; border-radius:10px; }
+        </style>
+        <h1>🔧 WEB3AIRDROP.LIVE - Admin Panel</h1>
+        <p>Add or Remove Airdrop Cards</p>
+        <div>
+          <input type="text" id="name" placeholder="Airdrop Name"><br>
+          <input type="text" id="logo" placeholder="Logo URL (direct image)"><br>
+          <textarea id="desc" placeholder="Short description"></textarea><br>
+          <input type="text" id="link" placeholder="Claim Link[](https://...)"><br>
+          <button onclick="addAirdrop()">➕ Add New Airdrop</button>
+        </div>
+        <div class="list" id="list"></div>
+        <script>
+          let airdrops = JSON.parse(localStorage.getItem('web3airdrops')) || [];
+          function renderList() {
+            const list = document.getElementById('list');
+            list.innerHTML = '<h2>Current Airdrops:</h2>';
+            airdrops.forEach((item, i) => {
+              list.innerHTML += \`
+                <div class="item">
+                  <strong>\${item.name}</strong><br>
+                  <small>\${item.link}</small>
+                  <button onclick="remove(\${i})" style="float:right;background:#f00;color:#fff;">Delete</button>
+                </div>
+              \`;
+            });
+          }
+          function addAirdrop() {
+            const name = document.getElementById('name').value.trim();
+            const logo = document.getElementById('logo').value.trim();
+            const desc = document.getElementById('desc').value.trim();
+            const link = document.getElementById('link').value.trim();
+            if (name && logo && desc && link) {
+              airdrops.push({name, logo, desc, link});
+              localStorage.setItem('web3airdrops', JSON.stringify(airdrops));
+              alert('Added!');
+              document.getElementById('name').value = '';
+              document.getElementById('logo').value = '';
+              document.getElementById('desc').value = '';
+              document.getElementById('link').value = '';
+              renderList();
+            } else {
+              alert('Fill all fields!');
+            }
+          }
+          function remove(i) {
+            if (confirm('Delete this airdrop?')) {
+              airdrops.splice(i,1);
+              localStorage.setItem('web3airdrops', JSON.stringify(airdrops));
+              renderList();
+            }
+          }
+          renderList();
+        </script>
+      \`;
+    }
+  </script>
+</body>
+</html>
