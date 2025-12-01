@@ -6,93 +6,16 @@
 <title>Web3 Airdrop</title>
 <link rel="icon" href="https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/favicon1.ico" />
 <style>
-    body, html {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-        font-family: Arial, sans-serif;
-        overflow-x: hidden;
-        color: white;
-    }
-
-    /* Background video */
-    #bg-video {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        z-index: -1;
-    }
-
-    .container {
-        text-align: center;
-        padding: 40px 20px;
-        backdrop-filter: blur(4px);
-    }
-
-    h1 {
-        font-size: 50px;
-        font-weight: bold;
-        background: linear-gradient(45deg, #ff0080, #00eaff, #ffea00);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        transition: 0.5s;
-    }
-
-    p.desc {
-        font-size: 20px;
-        margin-top: -10px;
-        margin-bottom: 40px;
-    }
-
-    @media (max-width: 600px) {
-        h1 {
-            font-size: 32px;
-            margin-top: 10px;
-        }
-        p.desc {
-            font-size: 16px;
-        }
-        .container {
-            padding-top: 20px;
-        }
-    }
-
-    /* Cards container */
-    .cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 20px;
-        padding: 20px;
-        max-width: 1100px;
-        margin: auto;
-    }
-
-    .card {
-        background: rgba(255, 255, 255, 0.12);
-        border-radius: 15px;
-        padding: 20px;
-        cursor: pointer;
-        transition: 0.5s;
-        text-align: center;
-        backdrop-filter: blur(5px);
-        transform-style: preserve-3d;
-    }
-
-    .card:hover {
-        transform: rotateY(10deg) scale(1.05);
-        background: rgba(255, 255, 255, 0.25);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.4);
-    }
-
-    .card img {
-        width: 70px;
-        height: 70px;
-        border-radius: 10px;
-        margin-bottom: 10px;
-    }
+    body, html { margin: 0; padding: 0; font-family: Arial, sans-serif; color: white; overflow-x: hidden; }
+    #bg-video { position: fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
+    .container { text-align:center; padding:40px 20px; backdrop-filter:blur(4px); }
+    h1 { font-size:50px; font-weight:bold; background:linear-gradient(45deg,#ff0080,#00eaff,#ffea00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; transition:0.5s; }
+    p.desc { font-size:20px; margin-top:-10px; margin-bottom:40px; }
+    @media(max-width:600px){ h1{font-size:32px;margin-top:10px;} p.desc{font-size:16px;} .container{padding-top:20px;} }
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; padding:20px; max-width:1100px; margin:auto; }
+    .card { background: rgba(255,255,255,0.12); border-radius:15px; padding:20px; cursor:pointer; transition:0.5s; text-align:center; backdrop-filter:blur(5px); transform-style: preserve-3d; }
+    .card:hover { transform: rotateY(10deg) scale(1.05); background: rgba(255,255,255,0.25); box-shadow:0 10px 20px rgba(0,0,0,0.4); }
+    .card img { width:70px; height:70px; border-radius:10px; margin-bottom:10px; }
 </style>
 </head>
 <body>
@@ -109,46 +32,24 @@
 <div class="cards" id="cardList"></div>
 
 <script>
-    // Load stored cards
-    let cards = JSON.parse(localStorage.getItem("airdropCards") || "[]");
-    renderCards();
-
-    function renderCards() {
-        const list = document.getElementById("cardList");
-        list.innerHTML = "";
-        cards.forEach((c, i) => {
-            list.innerHTML += `
-            <div class='card' draggable='true' ondragstart='dragStart(event, ${i})' onclick="window.open('${c.link}', '_blank')">
-                <img src='${c.logo}' />
-                <h3>${c.name}</h3>
-                <p>${c.detail}</p>
-            </div>`;
+async function loadCards() {
+    try {
+        const response = await fetch('cards.json');
+        const cards = await response.json();
+        const list = document.getElementById('cardList');
+        list.innerHTML = '';
+        cards.forEach(c => {
+            const div = document.createElement('div');
+            div.className = 'card';
+            div.onclick = () => window.open(c.link, '_blank');
+            div.innerHTML = `<img src="${c.logo}" /><h3>${c.name}</h3><p>${c.detail}</p>`;
+            list.appendChild(div);
         });
+    } catch(err){
+        console.error('Error loading cards:', err);
     }
-
-    // Drag-and-drop reorder
-    let dragSrcIndex = null;
-    function dragStart(e, index) {
-        dragSrcIndex = index;
-    }
-
-    document.getElementById('cardList').addEventListener('dragover', function(e){
-        e.preventDefault();
-    });
-
-    document.getElementById('cardList').addEventListener('drop', function(e){
-        e.preventDefault();
-        let target = e.target.closest('.card');
-        if (!target) return;
-        let targetIndex = Array.from(document.getElementById('cardList').children).indexOf(target);
-        if(targetIndex === dragSrcIndex) return;
-        // Swap cards
-        let temp = cards[dragSrcIndex];
-        cards[dragSrcIndex] = cards[targetIndex];
-        cards[targetIndex] = temp;
-        localStorage.setItem("airdropCards", JSON.stringify(cards));
-        renderCards();
-    });
+}
+loadCards();
 </script>
 
 </body>
