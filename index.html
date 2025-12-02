@@ -1,56 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Web3 Airdrop</title>
-<link rel="icon" href="https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/favicon1.ico" />
+
+<!-- Favicon -->
+<link rel="icon" href="https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/favicon1.ico">
+
 <style>
-    body, html { margin: 0; padding: 0; font-family: Arial, sans-serif; color: white; overflow-x: hidden; }
-    #bg-video { position: fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-1; }
-    .container { text-align:center; padding:40px 20px; backdrop-filter:blur(4px); }
-    h1 { font-size:50px; font-weight:bold; background:linear-gradient(45deg,#ff0080,#00eaff,#ffea00); -webkit-background-clip:text; -webkit-text-fill-color:transparent; transition:0.5s; }
-    p.desc { font-size:20px; margin-top:-10px; margin-bottom:40px; }
-    @media(max-width:600px){ h1{font-size:32px;margin-top:10px;} p.desc{font-size:16px;} .container{padding-top:20px;} }
-    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; padding:20px; max-width:1100px; margin:auto; }
-    .card { background: rgba(255,255,255,0.12); border-radius:15px; padding:20px; cursor:pointer; transition:0.5s; text-align:center; backdrop-filter:blur(5px); transform-style: preserve-3d; }
-    .card:hover { transform: rotateY(10deg) scale(1.05); background: rgba(255,255,255,0.25); box-shadow:0 10px 20px rgba(0,0,0,0.4); }
-    .card img { width:70px; height:70px; border-radius:10px; margin-bottom:10px; }
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        color: white;
+        text-align: center;
+        overflow-x: hidden;
+    }
+
+    /* Background video styling */
+    #bgVideo {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
+
+    /* Title */
+    h1 {
+        margin-top: 20px;
+        font-size: 3rem;
+        font-weight: 900;
+        background: linear-gradient(45deg, #ff00ff, #00ffff, #ff9900, #00ff00);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-shadow: 2px 2px 10px rgba(255,255,255,0.3);
+    }
+
+    /* Subtitle */
+    p.subtitle {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-top: -10px;
+        margin-bottom: 30px;
+        color: #eaeaea;
+    }
+
+    /* Card container */
+    .cards-container {
+        width: 95%;
+        max-width: 1100px;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 20px;
+    }
+
+    /* Card */
+    .card {
+        background: rgba(255,255,255,0.12);
+        backdrop-filter: blur(10px);
+        border-radius: 15px;
+        padding: 15px;
+        cursor: pointer;
+        transition: 0.3s;
+        border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    }
+
+    .card img {
+        width: 70px;
+        height: 70px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .card-desc {
+        font-size: 0.95rem;
+        color: #f5f5f5;
+    }
+
 </style>
 </head>
 <body>
 
-<video autoplay muted loop id="bg-video">
-    <source src="https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/backvid.mp4" type="video/mp4">
+<!-- Background Video -->
+<video autoplay muted loop id="bgVideo">
+  <source src="https://raw.githubusercontent.com/Muhammad-Saood/ROSE/main/backvid.mp4" type="video/mp4">
 </video>
 
-<div class="container">
-    <h1>WEB3AIRDROP.LIVE</h1>
-    <p class="desc">Get your all web3 airdrops claim portals and claim your potential airdrops</p>
+<h1>WEB3AIRDROP.LIVE</h1>
+<p class="subtitle">Get your all web3 airdrops claim portals and claim your potential airdrops</p>
+
+
+<!-- ⭐⭐⭐ CARDS START HERE – EDIT MANUALLY ⭐⭐⭐ -->
+<div class="cards-container">
+
+    <!-- CARD 1 -->
+    <div class="card" onclick="window.open('https://airdrops.io', '_blank')">
+        <img src="https://i.imgur.com/DM4ID9z.png">
+        <div class="card-title">Airdrops.io</div>
+        <div class="card-desc">All trending crypto airdrops in one place.</div>
+    </div>
+
+    <!-- CARD 2 -->
+    <div class="card" onclick="window.open('https://galxe.com', '_blank')">
+        <img src="https://i.imgur.com/QHKz2cc.png">
+        <div class="card-title">Galxe</div>
+        <div class="card-desc">Complete tasks and earn Web3 rewards.</div>
+    </div>
+
+    <!-- CARD 3 -->
+    <div class="card" onclick="window.open('https://crew3.xyz', '_blank')">
+        <img src="https://i.imgur.com/Zi6N6iJ.png">
+        <div class="card-title">Crew3</div>
+        <div class="card-desc">Join quests and build community XP.</div>
+    </div>
+
 </div>
+<!-- ⭐⭐⭐ CARDS END HERE ⭐⭐⭐ -->
 
-<div class="cards" id="cardList"></div>
-
-<script>
-async function loadCards() {
-    try {
-        const response = await fetch('cards.json');
-        const cards = await response.json();
-        const list = document.getElementById('cardList');
-        list.innerHTML = '';
-        cards.forEach(c => {
-            const div = document.createElement('div');
-            div.className = 'card';
-            div.onclick = () => window.open(c.link, '_blank');
-            div.innerHTML = `<img src="${c.logo}" /><h3>${c.name}</h3><p>${c.detail}</p>`;
-            list.appendChild(div);
-        });
-    } catch(err){
-        console.error('Error loading cards:', err);
-    }
-}
-loadCards();
-</script>
 
 </body>
 </html>
